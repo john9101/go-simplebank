@@ -3,15 +3,17 @@ package db
 import (
 	"context"
 	"testing"
-
 	"github.com/john9101/simplebank/util"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateUser(t *testing.T) User {
+	hashedPassword, err := util.HashedPassword("secret")
+	require.NoError(t, err)
+
 	arg := CreateUserParams{
 		Username:       util.RandomOwner(),
-		HashedPassword: "secret",
+		HashedPassword: hashedPassword,
 		FullName:       util.RandomOwner(),
 		Email:          util.RandomEmail(),
 	}
