@@ -5,15 +5,20 @@ import (
 	"log"
 	"os"
 	"testing"
-	"github.com/jackc/pgx/v5"
-)
 
-const dbSource = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
+	"github.com/jackc/pgx/v5"
+	"github.com/john9101/simplebank/util"
+)
 
 var testQueries *Queries
 
 func TestMain(m *testing.M) {
-	conn, err := pgx.Connect(context.Background(), dbSource)
+	config, err := util.LoadConfig("../..")
+	if err != nil {
+		log.Fatal("Can not load config:", err)
+	}
+
+	conn, err := pgx.Connect(context.Background(), config.DBSource)
 	if err != nil {
 		log.Fatal("Can not connect to db:", err)
 	}
