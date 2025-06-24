@@ -49,7 +49,7 @@ func TestGetAccountAPI(t *testing.T) {
 			defer ctrl.Finish()
 
 			store := mockdb.NewMockStore(ctrl)
-			server := NewServer(store)
+			server := NewTestServer(t, store)
 			recoder := httptest.NewRecorder()
 
 			url := fmt.Sprintf("/accounts/%d", account.ID)
