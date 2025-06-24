@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-
+ 
 	"github.com/gin-gonic/gin"
 	db "github.com/john9101/simplebank/db/sqlc"
 )
