@@ -8,9 +8,11 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	mockdb "github.com/john9101/simplebank/db/mocke"
 	db "github.com/john9101/simplebank/db/sqlc"
+	"github.com/john9101/simplebank/token"
 	"github.com/john9101/simplebank/util"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -23,12 +25,23 @@ func TestGetAccountAPI(t *testing.T) {
 	testCases := []struct {
 		name          string
 		accountID     int64
+		setupAuth     func(t *testing.T, request *http.Request, tokenMaker token.Maker)
 		buildStubs    func(store *mockdb.MockStore)
 		checkResponse func(recoder *httptest.ResponseRecorder)
 	}{
 		{
 			name:      "OK",
 			accountID: account.ID,
+			setupAuth: func(t *testing.T, request *http.Request, tokenMaker token.Maker) {
+				addAuthorization(
+					t,
+					request,
+					tokenMaker,
+					authorizationTypeBearer,
+					user.Username,
+					time.Minute,
+				)
+			},
 			buildStubs: func(store *mockdb.MockStore) {
 				store.EXPECT().
 					GetAccount(gomock.Any(), gomock.Eq(account.ID)).
@@ -54,8 +67,9 @@ func TestGetAccountAPI(t *testing.T) {
 
 			url := fmt.Sprintf("/accounts/%d", account.ID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
-
 			require.NoError(t, err)
+
+			tc.setupAuth(t, request, server.tokenMaker)
 			server.router.ServeHTTP(recoder, request)
 			tc.checkResponse(recoder)
 		})
