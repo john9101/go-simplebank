@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/john9101/simplebank/db/sqlc"
-	"github.com/john9101/simplebank/util"
+	db "github.com/john9101/go-simplebank/db/sqlc"
+	"github.com/john9101/go-simplebank/util"
 )
 
 type createUserRequest struct {

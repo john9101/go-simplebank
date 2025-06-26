@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
-	db "github.com/john9101/simplebank/db/sqlc"
-	"github.com/john9101/simplebank/token"
-	"github.com/john9101/simplebank/util"
+	db "github.com/john9101/go-simplebank/db/sqlc"
+	"github.com/john9101/go-simplebank/token"
+	"github.com/john9101/go-simplebank/util"
 )
 
 type Server struct {
