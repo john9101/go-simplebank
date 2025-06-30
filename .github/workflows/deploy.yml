@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Build image
-    runs-on: ubuntu-lastest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Configure AWS credentials
