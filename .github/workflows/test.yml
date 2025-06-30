@@ -35,14 +35,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Install golang-migrate
-        run: |
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-arm64.tar.gz | tar xvz
-          sudo mv migrate.linux-amd64 /usr/bin/migrate
-          which migrate    
+      # - name: Install golang-migrate
+      #   run: |
+      #     curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.3/migrate.linux-arm64.tar.gz | tar xvz
+      #     sudo mv migrate.linux-amd64 /usr/bin/migrate
+      #     which migrate    
       
-      - name: Run migrations
-        run: make migrateup
+      # - name: Run migrations
+      #   run: make migrateup
 
       # - name: Test
       #   run: make test
