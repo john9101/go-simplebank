@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	mockdb "github.com/john9101/simplebank/db/mocke"
-	"github.com/john9101/simplebank/token"
-	"github.com/john9101/simplebank/util"
+	mockdb "github.com/john9101/go-simplebank/db/mocke"
+	"github.com/john9101/go-simplebank/token"
+	"github.com/john9101/go-simplebank/util"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 )

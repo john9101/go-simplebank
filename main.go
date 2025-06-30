@@ -5,9 +5,9 @@ import (
 	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/john9101/simplebank/api"
-	db "github.com/john9101/simplebank/db/sqlc"
-	"github.com/john9101/simplebank/util"
+	"github.com/john9101/go-simplebank/api"
+	db "github.com/john9101/go-simplebank/db/sqlc"
+	"github.com/john9101/go-simplebank/util"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-module github.com/john9101/simplebank
+module github.com/john9101/go-simplebank
 
 go 1.24.4
 

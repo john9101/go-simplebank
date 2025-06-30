@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/john9101/simplebank/util"
+	"github.com/john9101/go-simplebank/util"
 )
 
 var testQueries *Queries
