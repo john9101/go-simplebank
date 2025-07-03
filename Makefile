@@ -7,11 +7,11 @@ createdb:
 dropdb:
 	sudo docker exec -it postgres-sb dropdb simple_bank
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose up
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose down
 migrateforce-1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force 1
+	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose force 1
 sqlc-g:
 	sqlc generate
 test:
