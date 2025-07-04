@@ -3,15 +3,15 @@ SHELL := /bin/bash
 postgres:
 	sudo docker run --name postgres-sb -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:16.9-bullseye
 createdb:
-	sudo docker exec -it postgres-sb createdb --username=root --owner=root simple_bank
+	sudo docker exec -it postgres-sb createdb --username=root --owner=root go_simple_bank
 dropdb:
-	sudo docker exec -it postgres-sb dropdb simple_bank
+	sudo docker exec -it postgres-sb dropdb go_simple_bank
 migrateup:
-	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose up
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/go_simple_bank?sslmode=disable" -verbose up
 migratedown:
-	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose down
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/go_simple_bank?sslmode=disable" -verbose down
 migrateforce-1:
-	migrate -path db/migration -database "postgresql://root:IYxwgWcXUF2kiM5ky9EH@go-simple-bank.c9wiww0k0fqn.ap-southeast-2.rds.amazonaws.com:5432/go_simple_bank" -verbose force 1
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/go_simple_bank?sslmode=disable" -verbose force 1
 sqlc-g:
 	sqlc generate
 test:
