@@ -91,7 +91,7 @@ func (x *CreateUserRequest) GetPassword() string {
 
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Use           *User                  `protobuf:"bytes,1,opt,name=use,proto3" json:"use,omitempty"`
+	User          *User                  `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -126,9 +126,9 @@ func (*CreateUserResponse) Descriptor() ([]byte, []int) {
 	return file_rpc_create_user_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateUserResponse) GetUse() *User {
+func (x *CreateUserResponse) GetUser() *User {
 	if x != nil {
-		return x.Use
+		return x.User
 	}
 	return nil
 }
@@ -143,9 +143,9 @@ const file_rpc_create_user_proto_rawDesc = "" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1b\n" +
 	"\tfull_name\x18\x02 \x01(\tR\bfullName\x12\x14\n" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x04 \x01(\tR\bpassword\"0\n" +
-	"\x12CreateUserResponse\x12\x1a\n" +
-	"\x03use\x18\x01 \x01(\v2\b.pb.UserR\x03useB&Z$github.com/john9101/go-simplebank/pbb\x06proto3"
+	"\bpassword\x18\x04 \x01(\tR\bpassword\"2\n" +
+	"\x12CreateUserResponse\x12\x1c\n" +
+	"\x04user\x18\x01 \x01(\v2\b.pb.UserR\x04userB&Z$github.com/john9101/go-simplebank/pbb\x06proto3"
 
 var (
 	file_rpc_create_user_proto_rawDescOnce sync.Once
@@ -166,7 +166,7 @@ var file_rpc_create_user_proto_goTypes = []any{
 	(*User)(nil),               // 2: pb.User
 }
 var file_rpc_create_user_proto_depIdxs = []int32{
-	2, // 0: pb.CreateUserResponse.use:type_name -> pb.User
+	2, // 0: pb.CreateUserResponse.user:type_name -> pb.User
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
