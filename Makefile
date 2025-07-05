@@ -23,10 +23,12 @@ mock:
 	source ~/.zshrc && mockgen -package mockdb -destination db/mocke/store.go github.com/john9101/go-simplebank/db/sqlc Store
 proto:
 	rm -f pb/*.go
+	rm -f doc/swagger/*.swagger.json
 	PATH=$(PATH):$(HOME)/go/bin \
 	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
     --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
+	 --openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=go_simple_bank \
     proto/*.proto
 evans:
 	evans --port 9090 --host localhost --package pb --service GoSimpleBank -r repl
