@@ -6,6 +6,9 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/john9101/go-simplebank/api"
@@ -30,6 +33,8 @@ func main() {
 	if err != nil {
 		log.Fatal("Can not connect to db:", err)
 	}
+
+	runDBMigration(config.MigrationURL, config.DBSource)
 
 	store := db.NewStore(connPool)
 
@@ -119,4 +124,17 @@ func runHttpServer(config util.Config, store db.Store) {
 	if err != nil {
 		log.Fatal("Can not start server:", err)
 	}
+}
+
+func runDBMigration(migrationURL string, dbSource string) {
+	migration, err := migrate.New(migrationURL, dbSource)
+	if err != nil {
+		log.Fatal("can not create new migration instance", err)
+	}
+
+	if err = migration.Up(); err != nil && err != migrate.ErrNoChange{
+		log.Fatal("failed to run migrate up", err)
+	}
+
+	log.Printf("db mirgated successfully")
 }
