@@ -11,10 +11,12 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.1
 	github.com/jackc/pgx/v5 v5.7.5
 	github.com/o1egl/paseto v1.0.0
+	github.com/rakyll/statik v0.1.7
 	github.com/spf13/viper v1.20.1
 	github.com/stretchr/testify v1.10.0
 	go.uber.org/mock v0.5.2
 	golang.org/x/crypto v0.39.0
+	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822
 	google.golang.org/grpc v1.73.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.5.1
 	google.golang.org/protobuf v1.36.6
@@ -62,7 +64,6 @@ require (
 	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

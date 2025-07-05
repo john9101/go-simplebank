@@ -30,6 +30,7 @@ proto:
 	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
 	 --openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=go_simple_bank \
     proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
 evans:
 	evans --port 9090 --host localhost --package pb --service GoSimpleBank -r repl
 .PHONY: postgres createdb dropdb migrateup migratedown migrateforce-1 sqlc-g test server mock proto evans
