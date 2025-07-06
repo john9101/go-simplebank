@@ -1,17 +1,18 @@
 SHELL := /bin/bash
+DB_URL = postgresql://root:secret@localhost:5432/go_simple_bank?sslmode=disable
 
 postgres:
 	sudo docker run --name postgres-sb -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:16.9-bullseye
 createdb:
-	sudo docker exec -it postgres-sb createdb --username=root --owner=root simple_bank
+	sudo docker exec -it postgres-sb createdb --username=root --owner=root go_simple_bank
 dropdb:
-	sudo docker exec -it postgres-sb dropdb simple_bank
+	sudo docker exec -it postgres-sb dropdb go_simple_bank
 migrateup:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration -database "${DB_URL}" -verbose up
 migratedown:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration -database "${DB_URL}" -verbose down
 migrateforce-1:
-	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force 1
+	migrate -path db/migration -database "${DB_URL}" -verbose force 1
 sqlc-g:
 	sqlc generate
 test:
@@ -19,5 +20,19 @@ test:
 server:
 	go run main.go
 mock:
-	source ~/.zshrc && mockgen -package mockdb -destination db/mocke/store.go github.com/john9101/go-simplebank/db/sqlc Store
-.PHONY: postgres createdb dropdb migrateup migratedown migrateforce-1 sqlc-g test server mock
+	mockgen -package mockdb -destination db/mocke/store.go github.com/john9101/go-simplebank/db/sqlc Store
+proto:
+	rm -f pb/*.go
+	rm -f doc/swagger/*.swagger.json
+	PATH=$(PATH):$(HOME)/go/bin \
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+    --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
+	 --openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=go_simple_bank \
+    proto/*.proto
+	statik -src=./doc/swagger -dest=./doc
+evans:
+	evans --port 9090 --host localhost --package pb --service GoSimpleBank -r repl
+redis:
+	sudo docker run --name redis -p 6379:6379 -d redis:latest
+.PHONY: postgres createdb dropdb migrateup migratedown migrateforce-1 sqlc-g test server mock proto evans redis
