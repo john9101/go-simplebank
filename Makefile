@@ -33,4 +33,6 @@ proto:
 	statik -src=./doc/swagger -dest=./doc
 evans:
 	evans --port 9090 --host localhost --package pb --service GoSimpleBank -r repl
-.PHONY: postgres createdb dropdb migrateup migratedown migrateforce-1 sqlc-g test server mock proto evans
+redis:
+	sudo docker run --name redis -p 6379:6379 -d redis:latest
+.PHONY: postgres createdb dropdb migrateup migratedown migrateforce-1 sqlc-g test server mock proto evans redis
