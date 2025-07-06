@@ -20,7 +20,7 @@ test:
 server:
 	go run main.go
 mock:
-	source ~/.zshrc && mockgen -package mockdb -destination db/mocke/store.go github.com/john9101/go-simplebank/db/sqlc Store
+	mockgen -package mockdb -destination db/mocke/store.go github.com/john9101/go-simplebank/db/sqlc Store
 proto:
 	rm -f pb/*.go
 	rm -f doc/swagger/*.swagger.json

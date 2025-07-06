@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	GoSimpleBank_CreateUser_FullMethodName = "/pb.GoSimpleBank/CreateUser"
 	GoSimpleBank_LoginUser_FullMethodName  = "/pb.GoSimpleBank/LoginUser"
+	GoSimpleBank_UpdateUser_FullMethodName = "/pb.GoSimpleBank/UpdateUser"
 )
 
 // GoSimpleBankClient is the client API for GoSimpleBank service.
@@ -29,6 +30,7 @@ const (
 type GoSimpleBankClient interface {
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginUserResponse, error)
+	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 }
 
 type goSimpleBankClient struct {
@@ -59,12 +61,23 @@ func (c *goSimpleBankClient) LoginUser(ctx context.Context, in *LoginUserRequest
 	return out, nil
 }
 
+func (c *goSimpleBankClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, GoSimpleBank_UpdateUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GoSimpleBankServer is the server API for GoSimpleBank service.
 // All implementations must embed UnimplementedGoSimpleBankServer
 // for forward compatibility.
 type GoSimpleBankServer interface {
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error)
+	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	mustEmbedUnimplementedGoSimpleBankServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedGoSimpleBankServer) CreateUser(context.Context, *CreateUserRe
 }
 func (UnimplementedGoSimpleBankServer) LoginUser(context.Context, *LoginUserRequest) (*LoginUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method LoginUser not implemented")
+}
+func (UnimplementedGoSimpleBankServer) UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 func (UnimplementedGoSimpleBankServer) mustEmbedUnimplementedGoSimpleBankServer() {}
 func (UnimplementedGoSimpleBankServer) testEmbeddedByValue()                      {}
@@ -138,6 +154,24 @@ func _GoSimpleBank_LoginUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GoSimpleBank_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GoSimpleBankServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GoSimpleBank_UpdateUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GoSimpleBankServer).UpdateUser(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GoSimpleBank_ServiceDesc is the grpc.ServiceDesc for GoSimpleBank service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var GoSimpleBank_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "LoginUser",
 			Handler:    _GoSimpleBank_LoginUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _GoSimpleBank_UpdateUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
